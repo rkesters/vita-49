@@ -1,0 +1,14 @@
+FROM mamba/cppbase:latest
+
+ENV VCPKG_FORCE_SYSTEM_BINARIES=1 
+
+RUN cd /opt \
+    && git clone https://github.com/Microsoft/vcpkg.git -n \ 
+    && cd vcpkg \
+    && git checkout master \
+    && ./bootstrap-vcpkg.sh -useSystemBinaries \
+    && cd /usr/local/bin \
+    && ln -s /opt/vcpkg/vcpkg \
+    && mkdir -p /tmp/vcpkg/triplets/
+
+COPY x64-linux-musl.cmake /tmp/vcpkg/triplets/

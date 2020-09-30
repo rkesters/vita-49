@@ -7,7 +7,8 @@
 # command after changing this file, to see if there are
 # any tracked files which get ignored after the change.
 #
-.*
+CMakeFiles/
+./lib
 *.o
 *.a
 *.ko
