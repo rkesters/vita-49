@@ -1,11 +1,11 @@
-#set(CMAKE_TOOLCHAIN_FILE "$ENV{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake")
+set(CMAKE_TOOLCHAIN_FILE "$ENV{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake")
 project(vrt VERSION 1.0.0)
 cmake_minimum_required(VERSION 3.10)
 
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ../lib/)
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ../lib/)
 
-#include_directories(include/vrt)
+include_directories(include/vrt)
 
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
@@ -19,6 +19,9 @@ set(Boost_USE_STATIC_LIBS ON)
 find_package(Boost REQUIRED)
 
 find_path(BOOST_FORMAT_INCLUDE_DIRS "boost/format.hpp" REQUIRED)
+
+find_package(VITA49 CONFIG REQUIRED)
+    
 
 
 add_library(vrt SHARED STATIC ${SRC_FILES})
@@ -38,6 +41,7 @@ set_target_properties( vrt PROPERTIES PUBLIC_HEADER "${HEADER}" )
 MESSAGE(STATUS "HEADER = ${HEADER}")
 
 target_link_libraries(vrt PRIVATE ${Boost_LIBRARIES})
+target_link_libraries(vrt PRIVATE VITA49::VITA49)
 
 include(GNUInstallDirs)
 set( version_config "${CMAKE_CURRENT_BINARY_DIR}/vrtConfigVersion.cmake" )

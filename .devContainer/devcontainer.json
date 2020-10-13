@@ -1,49 +1,39 @@
 // For format details, see https://aka.ms/vscode-remote/devcontainer.json or this file's README at:
 // https://github.com/microsoft/vscode-dev-containers/tree/v0.134.1/containers/cpp
 {
-	"name": "Mamba Sim",
-	//"image": "mamba/cpp",
-	//"runArgs": [ "--cap-add=SYS_PTRACE", "--security-opt", "seccomp=unconfined"],
+  "name": "Vita",
+  "image": "mamba/cppvcpkg:latest",
+  "runArgs": ["--cap-add=SYS_PTRACE", "--security-opt", "seccomp=unconfined"],
 
-	"dockerComposeFile": [
-		"./fire.extened.yml"
-	  ],
-	  "service": "spectra",
-	  "workspaceFolder": "/workspaces",
-	  "shutdownAction": "stopCompose",
-	// Set *default* container specific settings.json values on container create.
-	"settings": { 
-		"terminal.integrated.shell.linux": "/bin/bash"
-	},
+  // Set *default* container specific settings.json values on container create.
+  "settings": {
+    "terminal.integrated.shell.linux": "/bin/bash"
+  },
 
-	// Add the IDs of extensions you want installed when the container is created.
-	"extensions": [
-		"ms-vscode.cpptools",
-		"ms-vscode.cmake-tools",
-		"twxs.cmake",
-		"mutantdino.resourcemonitor",
-		"formulahendry.terminal",
-		"ryzngard.vscode-header-source",
-		"daresolutions.headertocpp",
-		"appi-systems.vs-auto-header",
-		"amiralizadeh9480.cpp-helper",
-		"xaver.clang-format",
-		"afmicc.getterandsettergenerator",
-		"davidschuldenfrei.gtest-adapter",
-		"matepek.vscode-catch2-test-adapter"
-	],
-	"mounts": [
-		"source=vsext,target=/root/.vscode-server/extensions,type=volume",
-		"source=vsexti,target=/root/.vscode-server-insiders/extensions,type=volume"
-	]
+  // Add the IDs of extensions you want installed when the container is created.
+  "extensions": [
+    "ms-vscode.cpptools",
+    "ms-vscode.cmake-tools",
+    "twxs.cmake",
+    "mutantdino.resourcemonitor",
+    "formulahendry.terminal",
+    "ryzngard.vscode-header-source",
+    "daresolutions.headertocpp",
+    "appi-systems.vs-auto-header",
+    "amiralizadeh9480.cpp-helper",
+    "xaver.clang-format"
+  ],
+  "mounts": [
+    "source=vsext,target=/root/.vscode-server/extensions,type=volume",
+    "source=vsexti,target=/root/.vscode-server-insiders/extensions,type=volume"
+  ]
 
-	// Use 'forwardPorts' to make a list of ports inside the container available locally.
-	// "forwardPorts": [],
+  // Use 'forwardPorts' to make a list of ports inside the container available locally.
+  // "forwardPorts": [],
 
-	// Use 'postCreateCommand' to run commands after the container is created.
-	// "postCreateCommand": "gcc -v",
+  // Use 'postCreateCommand' to run commands after the container is created.
+  // "postCreateCommand": "gcc -v",
 
-	// Uncomment to connect as a non-root user. See https://aka.ms/vscode-remote/containers/non-root.
-	// "remoteUser": "vscode"
-
+  // Uncomment to connect as a non-root user. See https://aka.ms/vscode-remote/containers/non-root.
+  // "remoteUser": "vscode"
 }
