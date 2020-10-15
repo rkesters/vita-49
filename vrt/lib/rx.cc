@@ -101,7 +101,7 @@ bool vrt_data_handler::operator()(const void *base, size_t len) {
       word_base += hdr.pkt_size();
       word_len -= hdr.pkt_size();
     } else {
-      const BasicVRLFrame *frame = new BasicVRLFrame(word_base, word_len, true);
+      BasicVRLFrame *frame = new BasicVRLFrame(word_base, word_len, true);
       (*f_handler)(frame);
       word_len = 0;
     }

@@ -37,7 +37,7 @@ class rx_frame_handler {
 public:
   virtual ~rx_frame_handler() = default;
 
-  virtual bool operator()(const BasicVRLFrame *frame);
+  virtual bool operator()(BasicVRLFrame *frame);
 };
 
 }; // namespace vrt
