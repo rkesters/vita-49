@@ -22,7 +22,7 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-#include <VITA49/BasicVRLFrame.h>
+#include <VITA49/BasicVRTPacket.h>
 #include <stddef.h>
 
 namespace vrt {
@@ -37,7 +37,7 @@ class rx_frame_handler {
 public:
   virtual ~rx_frame_handler() = default;
 
-  virtual bool operator()(BasicVRLFrame *frame);
+  virtual bool operator()(BasicVRTPacket *packet);
 };
 
 }; // namespace vrt

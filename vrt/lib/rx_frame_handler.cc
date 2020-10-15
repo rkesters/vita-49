@@ -27,6 +27,6 @@
 namespace vrt {
 
 // default operator is a NOP
-bool rx_frame_handler::operator()(BasicVRLFrame *frame) { return true; }
+bool rx_frame_handler::operator()(BasicVRTPacket *packet) { return true; }
 
 }; // namespace vrt
