@@ -47,3 +47,5 @@ make.log
 /build
 /run_tests.sh
 /vrt.pc
+vrtConfigVersion.cmake
+vrtTargets.cmake

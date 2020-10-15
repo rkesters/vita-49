@@ -115,4 +115,10 @@ bool rx::rx_packets(rx_packet_handler *handler, bool dont_wait) {
   return r == socket_rx_buffer::EB_OK || r == socket_rx_buffer::EB_WOULD_BLOCK;
 }
 
+bool rx::rx_frames(rx_frame_handler *handler, bool dont_wait) {
+  vrt_data_handler h(handler);
+  socket_rx_buffer::result r = d_srb->rx_frames(&h, dont_wait ? 0 : -1);
+  return r == socket_rx_buffer::EB_OK || r == socket_rx_buffer::EB_WOULD_BLOCK;
+}
+
 }; // namespace vrt
