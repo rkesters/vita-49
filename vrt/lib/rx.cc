@@ -28,6 +28,7 @@
 #include <stdexcept>
 #include <stdio.h>
 #include <unistd.h>
+#include <vector>
 #include <vrt/expanded_header.h>
 
 static void print_words(FILE *fp, size_t offset, const uint32_t *buf,
@@ -101,13 +102,20 @@ bool vrt_data_handler::operator()(const void *base, size_t len) {
       want_more = (*d_handler)(payload, n32_bit_words, &hdr);
 
     } else {
-      fprintf(stderr, "vrt_data_handler: VRT Header %X", word_base[0]);
-      fprintf(stderr, "vrt_data_handler: VRT Stream ID %X", word_base[1]);
-      fprintf(stderr, "vrt_data_handler: VRT CLASS ID 1 %X", word_base[2]);
-      fprintf(stderr, "vrt_data_handler: VRT CLASS ID 2 %X", word_base[3]);
+      u_int32_t *hostOrder = new u_int32_t[hdr.pkt_size()];
+      vector<u_int32_t> data{word_base, word_base + hdr.pkt_size()};
+      int count = 0;
+      for (u_int32_t &it : data) {
+        hostOrder[count] = ntohl(it);
+        count++;
+      }
+      fprintf(stderr, "vrt_data_handler: VRT Header %X \n", hostOrder[0]);
+      fprintf(stderr, "vrt_data_handler: VRT Stream ID %X \n", hostOrder[1]);
+      fprintf(stderr, "vrt_data_handler: VRT CLASS ID 1 %X \n", hostOrder[2]);
+      fprintf(stderr, "vrt_data_handler: VRT CLASS ID 2 %X \n", hostOrder[3]);
 
       BasicVRTPacket *frame =
-          new BasicVRTPacket(word_base, hdr.pkt_size() * 4, true);
+          new BasicVRTPacket(hostOrder, hdr.pkt_size() * 4, true);
       want_more = (*f_handler)(frame);
     }
     word_base += hdr.pkt_size();
