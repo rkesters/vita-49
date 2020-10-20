@@ -87,25 +87,31 @@ bool vrt_data_handler::operator()(const void *base, size_t len) {
 
   bool want_more = true;
   while (word_len > 0 && want_more) {
+    const uint32_t *payload;
+    size_t n32_bit_words;
+    expanded_header hdr;
+    if (!expanded_header::unpack(word_base, word_len, &hdr, &payload,
+                                 &n32_bit_words)) {
+      fprintf(stderr, "vrt_data_handler: malformed VRT packet!\n");
+      print_words(stderr, 0, word_base, word_len);
+      return true;
+    }
     if (d_handler != nullptr) {
-      const uint32_t *payload;
-      size_t n32_bit_words;
-      expanded_header hdr;
-      if (!expanded_header::unpack(word_base, word_len, &hdr, &payload,
-                                   &n32_bit_words)) {
-        fprintf(stderr, "vrt_data_handler: malformed VRT packet!\n");
-        print_words(stderr, 0, word_base, word_len);
-        return true;
-      }
 
       want_more = (*d_handler)(payload, n32_bit_words, &hdr);
-      word_base += hdr.pkt_size();
-      word_len -= hdr.pkt_size();
+
     } else {
-      BasicVRTPacket *frame = new BasicVRTPacket(word_base, word_len * 4, true);
+      fprintf(stderr, "vrt_data_handler: VRT Header %X", word_base[0]);
+      fprintf(stderr, "vrt_data_handler: VRT Stream ID %X", word_base[1]);
+      fprintf(stderr, "vrt_data_handler: VRT CLASS ID 1 %X", word_base[2]);
+      fprintf(stderr, "vrt_data_handler: VRT CLASS ID 2 %X", word_base[3]);
+
+      BasicVRTPacket *frame =
+          new BasicVRTPacket(word_base, hdr.pkt_size() * 4, true);
       want_more = (*f_handler)(frame);
-      word_len = 0;
     }
+    word_base += hdr.pkt_size();
+    word_len -= hdr.pkt_size();
   }
   return want_more;
 }
