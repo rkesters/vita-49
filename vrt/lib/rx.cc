@@ -109,6 +109,11 @@ bool vrt_data_handler::operator()(const void *base, size_t len) {
         hostOrder[count] = ntohl(it);
         count++;
       }
+      fprintf(stderr, "vrt_data_handler: VRT Header %X \n", word_base[0]);
+      fprintf(stderr, "vrt_data_handler: VRT Stream ID %X \n", word_base[1]);
+      fprintf(stderr, "vrt_data_handler: VRT CLASS ID 1 %X \n", word_base[2]);
+      fprintf(stderr, "vrt_data_handler: VRT CLASS ID 2 %X \n\n", word_base[3]);
+
       fprintf(stderr, "vrt_data_handler: VRT Header %X \n", hostOrder[0]);
       fprintf(stderr, "vrt_data_handler: VRT Stream ID %X \n", hostOrder[1]);
       fprintf(stderr, "vrt_data_handler: VRT CLASS ID 1 %X \n", hostOrder[2]);
